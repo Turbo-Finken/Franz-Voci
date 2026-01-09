@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Französisch Vokabeltrainer</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* { box-sizing: border-box; }
+
+/* 🌈 Animated iOS Background */
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(120deg, #0f1220, #1a1d3a, #22265a);
+  background-size: 400% 400%;
+  animation: bgMove 20s ease infinite;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🧊 Glass Card */
+.container {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.38),
+    rgba(255,255,255,0.18)
+  );
+  backdrop-filter: blur(45px) saturate(180%);
+  border-radius: 36px;
+  padding: 56px;
+  width: 820px;
+  max-width: 95%;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.45);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  animation: cardIn 1.1s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(30px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ✨ Card Light */
+.container::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent 60%);
+  animation: lightDrift 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes lightDrift {
+  0% { transform: translate(-10%, -10%); }
+  50% { transform: translate(10%, 10%); }
+  100% { transform: translate(-10%, -10%); }
+}
+
+/* Title */
+h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Vocab */
+.vocab-wrapper {
+  position: relative;
+  margin: 36px 0;
+}
+
+.vocab {
+  font-size: 38px;
+  font-weight: 600;
+  color: #ffffff;
+  position: relative;
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.vocab.fade {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Input */
+input {
+  width: 100%;
+  padding: 22px;
+  font-size: 24px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.96);
+  transition: box-shadow .4s ease;
+}
+
+input:focus {
+  box-shadow:
+    0 0 0 4px rgba(140,160,255,0.5),
+    0 0 25px rgba(140,160,255,0.45);
+}
+
+/* Buttons */
+.buttons { margin-top: 32px; }
+
+button {
+  padding: 20px 44px;
+  font-size: 20px;
+  border-radius: 24px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 10px;
+  color: white;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+}
+
+#checkBtn {
+  background: linear-gradient(135deg, #34d399, #059669);
+}
+
+#nextBtn {
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+}
+
+/* Feedback */
+.feedback {
+  font-size: 24px;
+  margin-top: 26px;
+  min-height: 32px;
+  font-weight: 600;
+  transition: color .4s ease, text-shadow .4s ease;
+}
+
+.correct {
+  color: #34d399;
+  text-shadow: 0 0 18px rgba(52,211,153,0.9);
+  animation: pulse 0.6s ease;
+}
+
+.wrong {
+  color: #fb7185;
+  text-shadow: 0 0 18px rgba(251,113,133,0.9);
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🇫🇷 Französisch Vokabeltrainer</h1>
+
+  <div class="vocab-wrapper">
+    <div class="vocab" id="vocab">Klicke auf „Nächstes Wort“</div>
+  </div>
+
+  <input id="answerInput" type="text" placeholder="Französische Übersetzung eingeben">
+
+  <div class="feedback" id="feedback"></div>
+
+  <div class="buttons">
+    <button id="checkBtn" onclick="checkAnswer()">Überprüfen</button>
+    <button id="nextBtn" onclick="nextWord()">Nächstes Wort</button>
+  </div>
+</div>
+
+<script>
+const vocabList = [
+  { de: "das Haus / die Häuser", fr: ["maison", "maisons"] },
+  { de: "der Beste / die Beste", fr: ["le meilleur", "la meilleure"] },
+  { de: "der Schlechteste / die Schlechteste", fr: ["le pire", "la pire"] },
+  { de: "teurer", fr: ["plus cher", "plus chère"] },
+  { de: "billiger", fr: ["moins cher", "moins chère"] },
+  { de: "einverstanden sein", fr: ["être d'accord"] },
+  { de: "Recht haben", fr: ["avoir raison"] },
+  { de: "Unrecht haben", fr: ["avoir tort"] },
+  { de: "erfolgreich sein", fr: ["réussir"] },
+  { de: "scheitern", fr: ["échouer"] },
+  { de: "helfen / jemandem helfen", fr: ["aider", "aider qn"] }
+];
+
+let currentIndex = -1;
+
+function normalize(text) {
+  return text.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+}
+
+function nextWord() {
+  let i;
+  do { i = Math.floor(Math.random() * vocabList.length); }
+  while (i === currentIndex);
+
+  currentIndex = i;
+  const el = document.getElementById("vocab");
+  el.classList.add("fade");
+
+  setTimeout(() => {
+    el.textContent = vocabList[currentIndex].de;
+    el.classList.remove("fade");
+  }, 300);
+
+  answerInput.value = "";
+  feedback.textContent = "";
+  feedback.className = "feedback";
+}
+
+function checkAnswer() {
+  if (currentIndex === -1) return;
+
+  const user = normalize(answerInput.value);
+  const correctAnswers = vocabList[currentIndex].fr.map(a => normalize(a));
+
+  feedback.className = "feedback";
+  if (correctAnswers.includes(user)) {
+    feedback.textContent = "✅ Richtig";
+    feedback.classList.add("correct");
+  } else {
+    feedback.textContent = "❌ Richtig wäre: " + vocabList[currentIndex].fr.join(" / ");
+    feedback.classList.add("wrong");
+  }
+}
+
+answerInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") checkAnswer();
+});
+</script>
+
+</body>
+</html>
