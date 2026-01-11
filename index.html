@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Französisch Vokabeltrainer</title>
+<title>Französisch Vokabeltrainer
+unite 6</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 * { box-sizing: border-box; }
 
-/* 🌈 Animated iOS Background */
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(120deg, #0f1220, #1a1d3a, #22265a);
-  background-size: 400% 400%;
-  animation: bgMove 20s ease infinite;
+  background: linear-gradient(120deg, #0f172a, #1e293b, #020617);
+  background-size: 300% 300%;
+  animation: bgMove 18s ease infinite;
   min-height: 100vh;
   margin: 0;
   display: flex;
@@ -29,71 +29,59 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* 🧊 Glass Card */
+/* Card */
 .container {
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.38),
-    rgba(255,255,255,0.18)
-  );
-  backdrop-filter: blur(45px) saturate(180%);
-  border-radius: 36px;
-  padding: 56px;
-  width: 820px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(35px);
+  border-radius: 28px;
+  padding: 48px;
+  width: 780px;
   max-width: 95%;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.45);
-  box-shadow:
-    0 40px 120px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-  animation: cardIn 1.1s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  animation: cardIn 1s ease;
   position: relative;
-  overflow: hidden;
 }
 
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(30px) scale(.97); }
+  from { opacity: 0; transform: translateY(30px) scale(.96); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ✨ Card Light */
-.container::after {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background: radial-gradient(circle, rgba(255,255,255,0.35), transparent 60%);
-  animation: lightDrift 12s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes lightDrift {
-  0% { transform: translate(-10%, -10%); }
-  50% { transform: translate(10%, 10%); }
-  100% { transform: translate(-10%, -10%); }
-}
-
-/* Title */
 h1 {
-  font-size: 42px;
-  font-weight: 700;
-  color: #ffffff;
-  margin-bottom: 32px;
-  position: relative;
-  z-index: 1;
+  font-size: 38px;
+  color: #f8fafc;
+  margin-bottom: 26px;
+}
+
+/* Settings Button */
+.settings-btn {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  transition: transform .3s ease, background .3s ease;
+}
+
+.settings-btn:hover {
+  transform: rotate(20deg) scale(1.1);
+  background: rgba(255,255,255,0.25);
 }
 
 /* Vocab */
-.vocab-wrapper {
-  position: relative;
-  margin: 36px 0;
-}
-
 .vocab {
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 600;
-  color: #ffffff;
-  position: relative;
-  transition: opacity .35s ease, transform .35s ease;
+  color: #e5e7eb;
+  margin: 32px 0 8px;
+  transition: opacity .3s ease, transform .3s ease;
 }
 
 .vocab.fade {
@@ -101,76 +89,120 @@ h1 {
   transform: translateY(10px);
 }
 
+/* Star */
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 34px;
+  cursor: pointer;
+  color: #facc15;
+  margin-bottom: 18px;
+  transition: transform .2s ease;
+}
+
+.star-btn:hover {
+  transform: scale(1.2);
+}
+
 /* Input */
 input {
   width: 100%;
-  padding: 22px;
-  font-size: 24px;
-  border-radius: 20px;
+  padding: 20px;
+  font-size: 22px;
+  border-radius: 16px;
   border: none;
   outline: none;
-  background: rgba(255,255,255,0.96);
-  transition: box-shadow .4s ease;
-}
-
-input:focus {
-  box-shadow:
-    0 0 0 4px rgba(140,160,255,0.5),
-    0 0 25px rgba(140,160,255,0.45);
 }
 
 /* Buttons */
-.buttons { margin-top: 32px; }
+.buttons {
+  margin-top: 30px;
+}
 
-button {
-  padding: 20px 44px;
-  font-size: 20px;
-  border-radius: 24px;
+button.action {
+  padding: 18px 40px;
+  font-size: 18px;
+  border-radius: 20px;
   border: none;
   font-weight: 600;
   cursor: pointer;
-  margin: 10px;
+  margin: 8px;
   color: white;
-  transition: transform .3s ease, box-shadow .3s ease;
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
-button:hover {
+button.action:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
 }
 
 #checkBtn {
-  background: linear-gradient(135deg, #34d399, #059669);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
 }
 
 #nextBtn {
-  background: linear-gradient(135deg, #818cf8, #6366f1);
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
 }
 
 /* Feedback */
 .feedback {
-  font-size: 24px;
-  margin-top: 26px;
-  min-height: 32px;
+  font-size: 22px;
+  margin-top: 22px;
+  min-height: 30px;
   font-weight: 600;
-  transition: color .4s ease, text-shadow .4s ease;
 }
 
 .correct {
-  color: #34d399;
-  text-shadow: 0 0 18px rgba(52,211,153,0.9);
-  animation: pulse 0.6s ease;
+  color: #22c55e;
+  animation: pulse .5s ease;
 }
 
 .wrong {
   color: #fb7185;
-  text-shadow: 0 0 18px rgba(251,113,133,0.9);
-  animation: pulse 0.6s ease;
+  animation: pulse .5s ease;
 }
 
 @keyframes pulse {
-  0% { opacity: 0.4; }
-  100% { opacity: 1; }
+  from { transform: scale(.95); opacity: .5; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* Settings Modal */
+.settings {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings.active {
+  display: flex;
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.settings-box {
+  background: rgba(30,41,59,0.95);
+  padding: 30px;
+  border-radius: 20px;
+  width: 320px;
+  text-align: center;
+  color: white;
+}
+
+.toggle {
+  margin-top: 20px;
+}
+
+.toggle input {
+  transform: scale(1.4);
+  margin-right: 10px;
 }
 </style>
 </head>
@@ -178,82 +210,164 @@ button:hover {
 <body>
 
 <div class="container">
+  <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
+
   <h1>🇫🇷 Französisch Vokabeltrainer</h1>
 
-  <div class="vocab-wrapper">
-    <div class="vocab" id="vocab">Klicke auf „Nächstes Wort“</div>
-  </div>
+  <div class="vocab" id="vocab">Klicke auf „Nächstes Wort“</div>
+  <button id="starBtn" class="star-btn">☆</button>
 
   <input id="answerInput" type="text" placeholder="Französische Übersetzung eingeben">
 
   <div class="feedback" id="feedback"></div>
 
   <div class="buttons">
-    <button id="checkBtn" onclick="checkAnswer()">Überprüfen</button>
-    <button id="nextBtn" onclick="nextWord()">Nächstes Wort</button>
+    <button class="action" id="checkBtn">Überprüfen</button>
+    <button class="action" id="nextBtn">Nächstes Wort</button>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="settings" id="settings">
+  <div class="settings-box">
+    <h2>⚙️ Einstellungen</h2>
+
+    <div class="toggle">
+      <label>
+        <input type="checkbox" id="strictToggle">
+        Strenge Überprüfung
+      </label>
+    </div>
+
+    <div class="toggle">
+      <label>
+        <input type="checkbox" id="starOnlyToggle">
+        ⭐ Nur Stern-Wörter üben
+      </label>
+    </div>
+
+    <br>
+    <button class="action" onclick="toggleSettings()">Schließen</button>
   </div>
 </div>
 
 <script>
+let strictMode = false;
+let starOnlyMode = false;
+
 const vocabList = [
-  { de: "das Haus / die Häuser", fr: ["maison", "maisons"] },
   { de: "der Beste / die Beste", fr: ["le meilleur", "la meilleure"] },
-  { de: "der Schlechteste / die Schlechteste", fr: ["le pire", "la pire"] },
-  { de: "teurer", fr: ["plus cher", "plus chère"] },
-  { de: "billiger", fr: ["moins cher", "moins chère"] },
-  { de: "einverstanden sein", fr: ["être d'accord"] },
-  { de: "Recht haben", fr: ["avoir raison"] },
-  { de: "Unrecht haben", fr: ["avoir tort"] },
-  { de: "erfolgreich sein", fr: ["réussir"] },
-  { de: "scheitern", fr: ["échouer"] },
-  { de: "helfen / jemandem helfen", fr: ["aider", "aider qn"] }
+  { de: "der Roboter", fr: ["le robot"] },
+  { de: "nur", fr: ["seulement"] },
+
+  { de: "können / dürfen", fr: ["pouvoir"] },
+  { de: "müssen", fr: ["devoir"] },
+  { de: "wollen", fr: ["vouloir"] },
+
+  { de: "eine gute / schlechte Note", fr: ["une bonne note", "une mauvaise note"] },
+  { de: "das Taschengeld", fr: ["l'argent de poche"] },
+  { de: "die Nachricht", fr: ["le message"] },
+
+  { de: "entscheiden", fr: ["decider"] },
+  { de: "sich konzentrieren", fr: ["se concentrer"] },
+  { de: "auswendig lernen / sich einprägen", fr: ["memoriser"] },
+
+  { de: "aufräumen / ordnen", fr: ["ranger"] },
+  { de: "die Sachen", fr: ["les affaires"] },
+  { de: "ohne", fr: ["sans"] },
+
+  { de: "das Problem", fr: ["le probleme"] },
+  { de: "die Lösung", fr: ["la solution"] },
+  { de: "erfinden", fr: ["inventer"] },
+
+  { de: "schwimmen", fr: ["nager"] },
+  { de: "jdm helfen", fr: ["aider qn"] }
 ];
+
 
 let currentIndex = -1;
 
+const vocabEl = document.getElementById("vocab");
+const inputEl = document.getElementById("answerInput");
+const feedbackEl = document.getElementById("feedback");
+const starBtn = document.getElementById("starBtn");
+
 function normalize(text) {
   return text.toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
 function nextWord() {
+  const list = starOnlyMode ? vocabList.filter(v => v.star) : vocabList;
+
+  if (list.length === 0) {
+    vocabEl.textContent = "⭐ Keine markierten Wörter";
+    return;
+  }
+
   let i;
-  do { i = Math.floor(Math.random() * vocabList.length); }
-  while (i === currentIndex);
+  do { i = Math.floor(Math.random() * list.length); }
+  while (vocabList.indexOf(list[i]) === currentIndex);
 
-  currentIndex = i;
-  const el = document.getElementById("vocab");
-  el.classList.add("fade");
+  currentIndex = vocabList.indexOf(list[i]);
 
+  vocabEl.classList.add("fade");
   setTimeout(() => {
-    el.textContent = vocabList[currentIndex].de;
-    el.classList.remove("fade");
-  }, 300);
+    vocabEl.textContent = vocabList[currentIndex].de;
+    vocabEl.classList.remove("fade");
+  }, 250);
 
-  answerInput.value = "";
-  feedback.textContent = "";
-  feedback.className = "feedback";
+  starBtn.textContent = vocabList[currentIndex].star ? "★" : "☆";
+  inputEl.value = "";
+  feedbackEl.textContent = "";
+  feedbackEl.className = "feedback";
 }
 
 function checkAnswer() {
   if (currentIndex === -1) return;
 
-  const user = normalize(answerInput.value);
-  const correctAnswers = vocabList[currentIndex].fr.map(a => normalize(a));
+  const user = normalize(inputEl.value);
+  const solutions = vocabList[currentIndex].fr.map(normalize);
 
-  feedback.className = "feedback";
-  if (correctAnswers.includes(user)) {
-    feedback.textContent = "✅ Richtig";
-    feedback.classList.add("correct");
+  const ok = strictMode
+    ? solutions.includes(user)
+    : user.split("/").every(p => solutions.includes(p.trim()));
+
+  if (ok) {
+    feedbackEl.textContent = "✅ Richtig";
+    feedbackEl.className = "feedback correct";
   } else {
-    feedback.textContent = "❌ Richtig wäre: " + vocabList[currentIndex].fr.join(" / ");
-    feedback.classList.add("wrong");
+    feedbackEl.textContent =
+      "❌ Richtig wäre: " + vocabList[currentIndex].fr.join(" / ");
+    feedbackEl.className = "feedback wrong";
   }
 }
 
-answerInput.addEventListener("keydown", e => {
+starBtn.onclick = () => {
+  if (currentIndex === -1) return;
+  vocabList[currentIndex].star = !vocabList[currentIndex].star;
+  starBtn.textContent = vocabList[currentIndex].star ? "★" : "☆";
+};
+
+function toggleSettings() {
+  document.getElementById("settings").classList.toggle("active");
+}
+
+document.getElementById("strictToggle").onchange = e => {
+  strictMode = e.target.checked;
+};
+
+document.getElementById("starOnlyToggle").onchange = e => {
+  starOnlyMode = e.target.checked;
+  nextWord();
+};
+
+document.getElementById("checkBtn").onclick = checkAnswer;
+document.getElementById("nextBtn").onclick = nextWord;
+
+inputEl.addEventListener("keydown", e => {
   if (e.key === "Enter") checkAnswer();
 });
 </script>
