@@ -3,12 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Französisch Vokabeltrainer
-unite 6</title>
+<title>Französisch Vokabeltrainer unite 6</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 * { box-sizing: border-box; }
 
 body {
@@ -29,7 +27,6 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Card */
 .container {
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(35px);
@@ -46,7 +43,7 @@ body {
 
 @keyframes cardIn {
   from { opacity: 0; transform: translateY(30px) scale(.96); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 h1 {
@@ -55,7 +52,6 @@ h1 {
   margin-bottom: 26px;
 }
 
-/* Settings Button */
 .settings-btn {
   position: absolute;
   top: 22px;
@@ -75,7 +71,6 @@ h1 {
   background: rgba(255,255,255,0.25);
 }
 
-/* Vocab */
 .vocab {
   font-size: 34px;
   font-weight: 600;
@@ -89,7 +84,6 @@ h1 {
   transform: translateY(10px);
 }
 
-/* Star */
 .star-btn {
   background: none;
   border: none;
@@ -100,11 +94,8 @@ h1 {
   transition: transform .2s ease;
 }
 
-.star-btn:hover {
-  transform: scale(1.2);
-}
+.star-btn:hover { transform: scale(1.2); }
 
-/* Input */
 input {
   width: 100%;
   padding: 20px;
@@ -114,10 +105,7 @@ input {
   outline: none;
 }
 
-/* Buttons */
-.buttons {
-  margin-top: 30px;
-}
+.buttons { margin-top: 30px; }
 
 button.action {
   padding: 18px 40px;
@@ -136,15 +124,9 @@ button.action:hover {
   box-shadow: 0 18px 40px rgba(0,0,0,0.45);
 }
 
-#checkBtn {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-}
+#checkBtn { background: linear-gradient(135deg, #22c55e, #16a34a); }
+#nextBtn  { background: linear-gradient(135deg, #6366f1, #4f46e5); }
 
-#nextBtn {
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
-}
-
-/* Feedback */
 .feedback {
   font-size: 22px;
   margin-top: 22px;
@@ -152,22 +134,15 @@ button.action:hover {
   font-weight: 600;
 }
 
-.correct {
-  color: #22c55e;
-  animation: pulse .5s ease;
-}
-
-.wrong {
-  color: #fb7185;
-  animation: pulse .5s ease;
-}
+.correct { color: #22c55e; animation: pulse .5s ease; }
+.wrong   { color: #fb7185; animation: pulse .5s ease; }
 
 @keyframes pulse {
   from { transform: scale(.95); opacity: .5; }
-  to   { transform: scale(1); opacity: 1; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-/* Settings Modal */
+/* SETTINGS */
 .settings {
   position: fixed;
   inset: 0;
@@ -177,14 +152,11 @@ button.action:hover {
   justify-content: center;
 }
 
-.settings.active {
-  display: flex;
-  animation: fadeIn .3s ease;
-}
+.settings.active { display: flex; animation: fadeIn .3s ease; }
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to   { opacity: 1; }
+  to { opacity: 1; }
 }
 
 .settings-box {
@@ -196,14 +168,8 @@ button.action:hover {
   color: white;
 }
 
-.toggle {
-  margin-top: 20px;
-}
-
-.toggle input {
-  transform: scale(1.4);
-  margin-right: 10px;
-}
+.toggle { margin-top: 20px; }
+.toggle input { transform: scale(1.4); margin-right: 10px; }
 </style>
 </head>
 
@@ -211,14 +177,12 @@ button.action:hover {
 
 <div class="container">
   <button class="settings-btn" onclick="toggleSettings()">⚙️</button>
-
   <h1>🇫🇷 Französisch Vokabeltrainer</h1>
 
   <div class="vocab" id="vocab">Klicke auf „Nächstes Wort“</div>
   <button id="starBtn" class="star-btn">☆</button>
 
   <input id="answerInput" type="text" placeholder="Französische Übersetzung eingeben">
-
   <div class="feedback" id="feedback"></div>
 
   <div class="buttons">
@@ -227,23 +191,22 @@ button.action:hover {
   </div>
 </div>
 
-<!-- SETTINGS -->
 <div class="settings" id="settings">
   <div class="settings-box">
     <h2>⚙️ Einstellungen</h2>
 
     <div class="toggle">
-      <label>
-        <input type="checkbox" id="strictToggle">
-        Strenge Überprüfung
-      </label>
+      <label><input type="checkbox" id="strictToggle"> Strenge Überprüfung</label>
     </div>
 
     <div class="toggle">
-      <label>
-        <input type="checkbox" id="starOnlyToggle">
-        ⭐ Nur Stern-Wörter üben
-      </label>
+      <label><input type="checkbox" id="starOnlyToggle"> ⭐ Nur Stern-Wörter</label>
+    </div>
+
+    <div class="toggle">
+      <strong>Niveau</strong><br>
+      <label><input type="radio" name="level" value="A" checked> A-Schüler</label><br>
+      <label><input type="radio" name="level" value="BC"> B/C-Schüler</label>
     </div>
 
     <br>
@@ -254,122 +217,102 @@ button.action:hover {
 <script>
 let strictMode = false;
 let starOnlyMode = false;
+let level = "A";
+let currentIndex = -1;
 
-const vocabList = [
+/* Vokabeln */
+const vocabA = [
   { de: "der Beste / die Beste", fr: ["le meilleur", "la meilleure"] },
-  { de: "der Roboter", fr: ["le robot"] },
-  { de: "nur", fr: ["seulement"] },
-
-  { de: "können / dürfen", fr: ["pouvoir"] },
+  { de: "können", fr: ["pouvoir"] },
   { de: "müssen", fr: ["devoir"] },
-  { de: "wollen", fr: ["vouloir"] },
-
-  { de: "eine gute / schlechte Note", fr: ["une bonne note", "une mauvaise note"] },
   { de: "das Taschengeld", fr: ["l'argent de poche"] },
-  { de: "die Nachricht", fr: ["le message"] },
-
-  { de: "entscheiden", fr: ["decider"] },
-  { de: "sich konzentrieren", fr: ["se concentrer"] },
-  { de: "auswendig lernen / sich einprägen", fr: ["memoriser"] },
-
-  { de: "aufräumen / ordnen", fr: ["ranger"] },
-  { de: "die Sachen", fr: ["les affaires"] },
-  { de: "ohne", fr: ["sans"] },
-
-  { de: "das Problem", fr: ["le probleme"] },
-  { de: "die Lösung", fr: ["la solution"] },
-  { de: "erfinden", fr: ["inventer"] },
-
-  { de: "schwimmen", fr: ["nager"] },
-  { de: "jdm helfen", fr: ["aider qn"] }
+  { de: "die Lösung", fr: ["la solution"] }
 ];
 
+const vocabBC = [
+  { de: "sein", fr: ["etre"] },
+  { de: "haben", fr: ["avoir"] },
+  { de: "gut", fr: ["bon"] },
+  { de: "schlecht", fr: ["mauvais"] },
+  { de: "die Schule", fr: ["l'ecole"] }
+];
 
-let currentIndex = -1;
+function activeList() {
+  let list = level === "A" ? vocabA : vocabBC;
+  return starOnlyMode ? list.filter(v => v.star) : list;
+}
 
 const vocabEl = document.getElementById("vocab");
 const inputEl = document.getElementById("answerInput");
 const feedbackEl = document.getElementById("feedback");
 const starBtn = document.getElementById("starBtn");
 
-function normalize(text) {
-  return text.toLowerCase()
+function normalize(t) {
+  return t.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, " ")
+    .replace(/^(le|la|l') /, "")
     .trim();
 }
 
 function nextWord() {
-  const list = starOnlyMode ? vocabList.filter(v => v.star) : vocabList;
-
-  if (list.length === 0) {
-    vocabEl.textContent = "⭐ Keine markierten Wörter";
+  const list = activeList();
+  if (!list.length) {
+    vocabEl.textContent = "Keine passenden Vokabeln";
     return;
   }
 
-  let i;
-  do { i = Math.floor(Math.random() * list.length); }
-  while (vocabList.indexOf(list[i]) === currentIndex);
-
-  currentIndex = vocabList.indexOf(list[i]);
-
+  currentIndex = Math.floor(Math.random() * list.length);
   vocabEl.classList.add("fade");
+
   setTimeout(() => {
-    vocabEl.textContent = vocabList[currentIndex].de;
+    vocabEl.textContent = list[currentIndex].de;
     vocabEl.classList.remove("fade");
   }, 250);
 
-  starBtn.textContent = vocabList[currentIndex].star ? "★" : "☆";
+  starBtn.textContent = list[currentIndex].star ? "★" : "☆";
   inputEl.value = "";
   feedbackEl.textContent = "";
   feedbackEl.className = "feedback";
 }
 
 function checkAnswer() {
-  if (currentIndex === -1) return;
+  const list = activeList();
+  if (!list[currentIndex]) return;
 
   const user = normalize(inputEl.value);
-  const solutions = vocabList[currentIndex].fr.map(normalize);
+  const solutions = list[currentIndex].fr.map(normalize);
 
   const ok = strictMode
     ? solutions.includes(user)
-    : user.split("/").every(p => solutions.includes(p.trim()));
+    : solutions.some(s => user.includes(s) || s.includes(user));
 
-  if (ok) {
-    feedbackEl.textContent = "✅ Richtig";
-    feedbackEl.className = "feedback correct";
-  } else {
-    feedbackEl.textContent =
-      "❌ Richtig wäre: " + vocabList[currentIndex].fr.join(" / ");
-    feedbackEl.className = "feedback wrong";
-  }
+  feedbackEl.textContent = ok
+    ? "✅ Richtig"
+    : "❌ Richtig wäre: " + list[currentIndex].fr.join(" /");
+
+  feedbackEl.className = "feedback " + (ok ? "correct" : "wrong");
 }
 
 starBtn.onclick = () => {
-  if (currentIndex === -1) return;
-  vocabList[currentIndex].star = !vocabList[currentIndex].star;
-  starBtn.textContent = vocabList[currentIndex].star ? "★" : "☆";
+  const list = activeList();
+  if (!list[currentIndex]) return;
+  list[currentIndex].star = !list[currentIndex].star;
+  starBtn.textContent = list[currentIndex].star ? "★" : "☆";
 };
 
 function toggleSettings() {
   document.getElementById("settings").classList.toggle("active");
 }
 
-document.getElementById("strictToggle").onchange = e => {
-  strictMode = e.target.checked;
-};
-
-document.getElementById("starOnlyToggle").onchange = e => {
-  starOnlyMode = e.target.checked;
-  nextWord();
-};
+document.getElementById("strictToggle").onchange = e => strictMode = e.target.checked;
+document.getElementById("starOnlyToggle").onchange = e => { starOnlyMode = e.target.checked; nextWord(); };
+document.querySelectorAll("input[name='level']").forEach(r =>
+  r.onchange = e => { level = e.target.value; nextWord(); }
+);
 
 document.getElementById("checkBtn").onclick = checkAnswer;
 document.getElementById("nextBtn").onclick = nextWord;
-
-inputEl.addEventListener("keydown", e => {
-  if (e.key === "Enter") checkAnswer();
-});
+inputEl.addEventListener("keydown", e => e.key === "Enter" && checkAnswer());
 </script>
 
 </body>
