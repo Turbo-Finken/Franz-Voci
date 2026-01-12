@@ -206,7 +206,7 @@ button.action:hover {
     <div class="toggle">
       <strong>Niveau</strong><br>
       <label><input type="radio" name="level" value="A" checked> A-Schüler</label><br>
-      <label><input type="radio" name="level" value="BC"> B/C-Schüler</label>
+      <label><input type="radio" name="level" value="BC"> B/C-Schüler(beta)</label>
     </div>
 
     <br>
@@ -230,11 +230,11 @@ const vocabA = [
 ];
 
 const vocabBC = [
-  { de: "sein", fr: ["etre"] },
-  { de: "haben", fr: ["avoir"] },
-  { de: "gut", fr: ["bon"] },
-  { de: "schlecht", fr: ["mauvais"] },
-  { de: "die Schule", fr: ["l'ecole"] }
+  { de: "beta", fr: ["beta"] },
+  { de: "beta", fr: ["beta"] },
+  { de: "beta", fr: ["beta"] },
+  { de: "beta", fr: ["beta"] },
+  { de: "beta", fr: ["beta"] }
 ];
 
 function activeList() {
@@ -317,4 +317,3 @@ inputEl.addEventListener("keydown", e => e.key === "Enter" && checkAnswer());
 
 </body>
 </html>
-
