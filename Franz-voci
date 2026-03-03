@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -114,28 +115,155 @@ button.action:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 15p
 
 <script>
 // --- DATEN & MOTIVATION ---
-const vocabList = [
-    { de: "der Beste / die Beste", fr: ["le meilleur", "la meilleure"] },
-  { de: "der Roboter", fr: ["le robot"] },
-  { de: "nur", fr: ["seulement"] },
-  { de: "können / dürfen", fr: ["pouvoir"] },
-  { de: "müssen", fr: ["devoir"] },
-  { de: "wollen", fr: ["vouloir"] },
-  { de: "eine gute / schlechte Note", fr: ["une bonne note", "une mauvaise note"] },
-  { de: "das Taschengeld", fr: ["l'argent de poche"] },
-  { de: "die Nachricht", fr: ["le message"] },
-  { de: "entscheiden", fr: ["décider"] },
-  { de: "sich konzentrieren", fr: ["se concentrer"] },
-  { de: "auswendig lernen / sich einprägen", fr: ["mémoriser"] },
-  { de: "aufräumen / ordnen", fr: ["ranger"] },
-  { de: "die Sachen", fr: ["les affaires"] },
-  { de: "ohne", fr: ["sans"] },
-  { de: "das Problem", fr: ["le probleme"] },
-  { de: "die Lösung", fr: ["la solution"] },
-  { de: "erfinden", fr: ["inventer"] },
-  { de: "schwimmen", fr: ["nager"] },
-  { de: "jdm helfen", fr: ["aider qn"] }
+  // Bild 1: Lernziel 4 - Kleidung & Reise
+    const vocabList = [
+  // Bild 1: Lernziel 4
+  { de: "die Kleider / die Kleidung", fr: ["les vêtements (m. pl.)"] },
+  { de: "die Jacke", fr: ["la veste"] },
+  { de: "die Hose", fr: ["le pantalon"] },
+  { de: "das T-Shirt", fr: ["le t-shirt"] },
+  { de: "das Hemd", fr: ["la chemise"] },
+  { de: "der Rock", fr: ["la jupe"] },
+  { de: "das Kleid", fr: ["la robe"] },
+  { de: "die Jeans", fr: ["le jean"] },
+  { de: "der Pullover", fr: ["le pull"] },
+  { de: "die Socken", fr: ["les chaussettes (f. pl.)"] },
+  { de: "die Schuhe", fr: ["les chaussures (f. pl.)"] },
+  { de: "der Hut", fr: ["le chapeau"] },
+  { de: "die Mütze", fr: ["le bonnet"] },
+  { de: "der Schal", fr: ["l'écharpe (f.)"] },
+  { de: "die Brille", fr: ["les lunettes (f. pl.)"] },
+  { de: "die Sonnenbrille", fr: ["les lunettes de soleil"] },
+  { de: "die Tasche", fr: ["le sac"] },
+  { de: "der Rucksack", fr: ["le sac à dos"] },
+  { de: "der Koffer", fr: ["la valise"] },
+  { de: "die Badehose", fr: ["le maillot de bain"] },
+  { de: "der Bikini", fr: ["le bikini"] },
+
+  // Bild 2 & 14: Lernziel 2 & 3
+  { de: "glücklich (m./f.)", fr: ["heureux", "heureuse"] },
+  { de: "traurig", fr: ["triste"] },
+  { de: "müde", fr: ["fatigué", "fatiguée"] },
+  { de: "wütend", fr: ["fâché", "fâchée"] },
+  { de: "verliebt", fr: ["amoureux", "amoureuse"] },
+  { de: "krank", fr: ["malade"] },
+  { de: "fit / in Form", fr: ["en forme"] },
+  { de: "sprechen", fr: ["parler"] },
+  { de: "hören / zuhören", fr: ["écouter"] },
+  { de: "schauen / ansehen", fr: ["regarder"] },
+  { de: "essen", fr: ["manger"] },
+  { de: "trinken", fr: ["boire"] },
+
+  // Bild 3: Lernziel 1 & 2
+  { de: "die Schule", fr: ["l'école (f.)"] },
+  { de: "der Lehrer / die Lehrerin", fr: ["le maître", "la maîtresse"] },
+  { de: "der Schüler / die Schülerin", fr: ["l'élève (m./f.)"] },
+  { de: "das Klassenzimmer", fr: ["la salle de classe"] },
+  { de: "die Hausaufgaben", fr: ["les devoirs (m. pl.)"] },
+  { de: "die Pause", fr: ["la récréation"] },
+  { de: "lachen", fr: ["rire"] },
+  { de: "weinen", fr: ["pleurer"] },
+  { de: "Angst haben", fr: ["avoir peur"] },
+
+  // Bild 4: Lernziel 3
+  { de: "aufstehen", fr: ["se lever"] },
+  { de: "sich duschen", fr: ["se doucher"] },
+  { de: "sich bürsten", fr: ["se brosser"] },
+  { de: "das Frühstück", fr: ["le petit-déjeuner"] },
+  { de: "die Mutter", fr: ["la mère"] },
+  { de: "der Vater", fr: ["le père"] },
+  { de: "die Schwester", fr: ["la sœur"] },
+  { de: "der Bruder", fr: ["le frère"] },
+
+  // Bild 5 & 15: Lernziel 1, 2 & 3
+  { de: "schlafen", fr: ["dormir"] },
+  { de: "Hast du gut geschlafen?", fr: ["Tu as bien dormi?"] },
+  { de: "eine Erkältung haben, einen Schnupfen haben", fr: ["avoir le rhume"] },
+  { de: "zum Arzt gehen", fr: ["aller chez le médecin"] },
+  { de: "der Husten", fr: ["la toux"] },
+  { de: "jmdm. telefonieren, jmdn. anrufen", fr: ["téléphoner à qn"] },
+  { de: "ein Notfall", fr: ["une urgence"] },
+  { de: "den Puls kontrollieren, messen", fr: ["contrôler le pouls"] },
+  { de: "Bleib ruhig.", fr: ["Reste tranquille."] },
+  { de: "den Verband wechseln", fr: ["changer le pansement"] },
+  { de: "lernen", fr: ["apprendre"] },
+  { de: "er hat gelernt", fr: ["il a appris"] },
+  { de: "verstehen", fr: ["comprendre"] },
+  { de: "wir haben verstanden", fr: ["nous avons compris"] },
+  { de: "nehmen", fr: ["prendre"] },
+  { de: "sie hat genommen", fr: ["elle a pris"] },
+  { de: "die Tablette", fr: ["le comprimé"] },
+  { de: "das Medikament", fr: ["le médicament"] },
+  { de: "Mir ist schlecht", fr: ["J'ai mal au cœur"] },
+  { de: "der Durchfall", fr: ["la diarrhée"] },
+  { de: "Ich habe mir den Arm gebrochen.", fr: ["Je me suis cassé le bras."] },
+  { de: "ein Schmerzmittel", fr: ["un antidouleur"] },
+  { de: "Ich habe mir den Fuss verstaucht.", fr: ["Je me suis foulé le pied."] },
+  { de: "Ich habe mir in den Finger geschnitten.", fr: ["Je me suis coupé le doigt."] },
+  { de: "Tut das/es weh?", fr: ["Ça fait mal?"] },
+  { de: "(sich) bewegen", fr: ["bouger"] },
+  { de: "Ziehen Sie/Zieht einen Schal an.", fr: ["Mettez une écharpe."] },
+  { de: "Trinken Sie/Trinkt Tee.", fr: ["Buvez du thé."] },
+  { de: "sich ausruhen", fr: ["se reposer"] },
+  { de: "sich anziehen", fr: ["s'habiller"] },
+  { de: "Setzen Sie sich./Setzt euch.", fr: ["Asseyez-vous."] },
+  { de: "Leg dich ins Bett.", fr: ["Mets-toi au lit."] },
+  { de: "Geh ins Spital.", fr: ["Va à l'hôpital."] },
+
+  // Bild 6: Lernziel 3
+  { de: "die Ferien", fr: ["les vacances (f. pl.)"] },
+  { de: "am Meer", fr: ["au bord de la mer"] },
+  { de: "in den Bergen", fr: ["à la montagne"] },
+  { de: "besuchen", fr: ["visiter"] },
+  { de: "reisen", fr: ["voyager"] },
+
+  // Bild 7: Lernziel 3 (Passé composé avec être)
+  { de: "gehen", fr: ["aller"] },
+  { de: "kommen", fr: ["venir"] },
+  { de: "ankommen", fr: ["arriver"] },
+  { de: "weggehen", fr: ["partir"] },
+  { de: "eintreten", fr: ["entrer"] },
+  { de: "hinausgehen", fr: ["sortir"] },
+  { de: "bleiben", fr: ["rester"] },
+  { de: "fallen", fr: ["tomber"] },
+
+  // Bild 8 & 9: Unité 6, Lernziel 1
+  { de: "der Apparat / das Gerät", fr: ["l'appareil (m.)"] },
+  { de: "die Maschine", fr: ["la machine"] },
+  { de: "der Staubsauger", fr: ["l'aspirateur (m.)"] },
+  { de: "die Kaffeemaschine", fr: ["la machine à café"] },
+  { de: "der Haartrockner / Föhn", fr: ["le sèche-cheveux"] },
+  { de: "leicht (m./f.)", fr: ["léger", "légère"] },
+  { de: "schwer (m./f.)", fr: ["lourd", "lourde"] },
+  { de: "praktisch (m./f.)", fr: ["pratique"] },
+  { de: "nützlich (m./f.)", fr: ["utile"] },
+
+  // Bild 10 & 12: Unité 4, Lernziel 1 & 2
+  { de: "der Beruf", fr: ["le métier", "la profession"] },
+  { de: "arbeiten", fr: ["travailler"] },
+  { de: "verkaufen", fr: ["vendre"] },
+  { de: "kaufen", fr: ["acheter"] },
+  { de: "das Geld", fr: ["l'argent (m.)"] },
+
+  // Bild 11: Lernziel 1
+  { de: "der Freund / die Freundin", fr: ["l'ami (m.)", "l'amie (f.)"] },
+  { de: "sympathisch", fr: ["sympathique"] },
+  { de: "cool", fr: ["cool"] },
+  { de: "lustig", fr: ["drôle"] },
+
+  // Bild 13: Unité 3, Lernziel 1 & 2
+  { de: "die Welt", fr: ["le monde"] },
+  { de: "die Erde", fr: ["la terre"] },
+  { de: "der Mond", fr: ["la lune"] },
+  { de: "die Sonne", fr: ["le soleil"] },
+  { de: "der Stern", fr: ["l'étoile (f.)"] },
+  { de: "der Planet", fr: ["la planète"] },
+  { de: "die Insel", fr: ["l'île (f.)"] },
+  { de: "der See", fr: ["le lac"] },
+  { de: "der Wald", fr: ["la forêt"] }
 ];
+
+
 
 const praiseList = [
     "EXCELLENT! 🏆", "MAGNIFIQUE! ✨", "STARK GEMACHT! 💪", "UNSTOPPABLE! 🔥",
