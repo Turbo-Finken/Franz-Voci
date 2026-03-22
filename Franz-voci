@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -93,7 +92,7 @@ button.action:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 15p
   <div class="vocab" id="vocabDisplay">Warten auf Start... ⏳</div>
   <button id="starBtn" class="star-btn" onclick="toggleStar()">☆</button>
   <input id="answerInput" type="text" placeholder="Deine Antwort... ✨" autocomplete="off">
-  <div class="feedback" id="feedback"></div>
+      <div class="feedback" id="feedback"></div>
   <div class="buttons">
     <button class="action" id="checkBtn" onclick="check()">CHECK ✅</button>
     <button class="action" id="nextBtn" onclick="showNext()">NEXT ➡️</button>
@@ -114,274 +113,321 @@ button.action:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 15p
 </div>
 
 <script>
-// --- DATEN & MOTIVATION ---
-  // Bild 1: Lernziel 4 - Kleidung & Reise
-    const vocabList = [
-  // Bild 1: Lernziel 4
-  { de: "die Kleider / die Kleidung", fr: ["les vêtements (m. pl.)"] },
-  { de: "die Jacke", fr: ["la veste"] },
-  { de: "die Hose", fr: ["le pantalon"] },
-  { de: "das T-Shirt", fr: ["le t-shirt"] },
-  { de: "das Hemd", fr: ["la chemise"] },
-  { de: "der Rock", fr: ["la jupe"] },
-  { de: "das Kleid", fr: ["la robe"] },
-  { de: "die Jeans", fr: ["le jean"] },
-  { de: "der Pullover", fr: ["le pull"] },
-  { de: "die Socken", fr: ["les chaussettes (f. pl.)"] },
-  { de: "die Schuhe", fr: ["les chaussures (f. pl.)"] },
-  { de: "der Hut", fr: ["le chapeau"] },
-  { de: "die Mütze", fr: ["le bonnet"] },
-  { de: "der Schal", fr: ["l'écharpe (f.)"] },
-  { de: "die Brille", fr: ["les lunettes (f. pl.)"] },
-  { de: "die Sonnenbrille", fr: ["les lunettes de soleil"] },
-  { de: "die Tasche", fr: ["le sac"] },
-  { de: "der Rucksack", fr: ["le sac à dos"] },
-  { de: "der Koffer", fr: ["la valise"] },
-  { de: "die Badehose", fr: ["le maillot de bain"] },
-  { de: "der Bikini", fr: ["le bikini"] },
+const vocabulaire = [
+  // --- BILD 1: Lernziel 1 & 2 ---
+  { de: "eine Geschichte", fr: ["une histoire"], isImg: true },
+  { de: "es hat, es gibt", fr: ["il y a"], isImg: true },
+  { de: "ein Unfall", fr: ["un accident"], isImg: true },
+  { de: "die Glocke", fr: ["la cloche"], isImg: true },
+  { de: "klingeln, läuten", fr: ["sonner"], isImg: true },
+  { de: "der Lehrer / die Lehrerin", fr: ["le prof", "la prof"], isImg: true },
+  { de: "das Schulzimmer", fr: ["la salle de classe"], isImg: true },
+  { de: "die Pause", fr: ["la récréation"], isImg: true },
+  { de: "zuerst", fr: ["d'abord"], isImg: true },
+  { de: "dann, danach", fr: ["ensuite"], isImg: true },
+  { de: "schliesslich, letztlich", fr: ["finalement"], isImg: true },
+  { de: "Ich öffne die Tür.", fr: ["J'ouvre la porte."], isImg: true },
+  { de: "der Schlüssel", fr: ["la clé"], isImg: true },
+  { de: "kaputt machen, zerbrechen", fr: ["casser"], isImg: true },
+  { de: "Es regnet.", fr: ["Il pleut."], isImg: true },
+  { de: "müde", fr: ["fatigué", "fatiguée"], isImg: true },
+  { de: "haben", fr: ["avoir"], isImg: true },
+  { de: "Ich stehe um 6.30 Uhr auf.", fr: ["Je me lève à 6h30."], isImg: true },
+  { de: "der Wecker", fr: ["le réveil"], isImg: true },
+  { de: "aufwachen", fr: ["se réveiller"], isImg: true },
+  { de: "sich rasieren", fr: ["se raser"], isImg: true },
+  { de: "duschen", fr: ["se doucher"], isImg: true },
+  { de: "so schnell wie möglich", fr: ["aussi vite que possible"], isImg: true },
+  { de: "herumhängen, trödeln", fr: ["glander"], isImg: true },
+  { de: "die Zeit / das Wetter", fr: ["le temps"], isImg: true },
+  { de: "das Haus verlassen", fr: ["quitter la maison"], isImg: true },
+  { de: "Ich nehme den Bus.", fr: ["Je prends le bus."], isImg: true },
+  { de: "zu spät kommen", fr: ["arriver en retard"], isImg: true },
+  { de: "in der Schule", fr: ["à l'école"], isImg: true },
+  { de: "der Kollege / die Kollegin", fr: ["le copain", "la copine"], isImg: true },
+  { de: "sich vergnügen", fr: ["s'amuser"], isImg: true },
+  { de: "auf dem Schulweg", fr: ["sur le chemin de l'école"], isImg: true },
+  { de: "entspannt / locker", fr: ["relax"], isImg: true },
+  { de: "froh / zufrieden", fr: ["content", "contente"], isImg: true },
+  { de: "gestresst", fr: ["stressé", "stressée"], isImg: true },
+  { de: "nervös", fr: ["nerveux", "nerveuse"], isImg: true },
+  { de: "genervt", fr: ["énervé", "énervée"], isImg: true },
+  { de: "nett", fr: ["gentil", "gentille"], isImg: true },
+  { de: "Angst haben", fr: ["avoir peur"], isImg: true },
+  { de: "schrecklich", fr: ["horrible"], isImg: true },
+  { de: "panikieren", fr: ["paniquer"], isImg: true },
 
-  // Bild 2 & 14: Lernziel 2 & 3
-  { de: "glücklich (m./f.)", fr: ["heureux", "heureuse"] },
-  { de: "traurig", fr: ["triste"] },
-  { de: "müde", fr: ["fatigué", "fatiguée"] },
-  { de: "wütend", fr: ["fâché", "fâchée"] },
-  { de: "verliebt", fr: ["amoureux", "amoureuse"] },
-  { de: "krank", fr: ["malade"] },
-  { de: "fit / in Form", fr: ["en forme"] },
-  { de: "sprechen", fr: ["parler"] },
-  { de: "hören / zuhören", fr: ["écouter"] },
-  { de: "schauen / ansehen", fr: ["regarder"] },
-  { de: "essen", fr: ["manger"] },
-  { de: "trinken", fr: ["boire"] },
+  // --- BILD 2: Lernziel 3 ---
+  { de: "im Bett bleiben", fr: ["rester au lit"], isImg: true },
+  { de: "im Badezimmer", fr: ["dans la salle de bains"], isImg: true },
+  { de: "das Gesicht waschen", fr: ["se laver le visage"], isImg: true },
+  { de: "sich anziehen", fr: ["s'habiller"], isImg: true },
+  { de: "sich frisieren", fr: ["se coiffer"], isImg: true },
+  { de: "sich schminken", fr: ["se maquiller"], isImg: true },
+  { de: "essen", fr: ["manger"], isImg: true },
+  { de: "das Frühstück", fr: ["le petit-déjeuner"], isImg: true },
+  { de: "Zähne putzen", fr: ["se brosser les dents"], isImg: true },
+  { de: "den Rucksack packen", fr: ["préparer son sac à dos"], isImg: true },
+  { de: "schnell", fr: ["rapidement"], isImg: true },
+  { de: "suchen", fr: ["chercher"], isImg: true },
+  { de: "finden", fr: ["trouver"], isImg: true },
+  { de: "vergessen", fr: ["oublier"], isImg: true },
+  { de: "das Französischbuch", fr: ["le livre de français"], isImg: true },
+  { de: "die Schulsachen", fr: ["les affaires d'école"], isImg: true },
+  { de: "lernen (für Test)", fr: ["réviser"], isImg: true },
+  { de: "auf dem Handy spielen", fr: ["jouer sur son portable"], isImg: true },
+  { de: "mit dem Rad zur Schule", fr: ["aller à l'école à vélo"], isImg: true },
+  { de: "zu Fuss gehen", fr: ["aller à pied"], isImg: true },
+  { de: "den Bus verpassen", fr: ["rater le bus"], isImg: true },
+  { de: "zu spät", fr: ["trop tard"], isImg: true },
+  { de: "früh", fr: ["tôt"], isImg: true },
+  { de: "nur", fr: ["seulement"], isImg: true },
+  { de: "sich beeilen", fr: ["se dépêcher"], isImg: true },
+  { de: "sich entschuldigen", fr: ["s'excuser"], isImg: true },
+  { de: "die Schwester", fr: ["la sœur"], isImg: true },
+  { de: "der Bruder", fr: ["le frère"], isImg: true },
+  { de: "die Eltern", fr: ["les parents"], isImg: true },
+  { de: "sich streiten", fr: ["se disputer"], isImg: true },
+  { de: "schreien", fr: ["crier"], isImg: true },
 
-  // Bild 3: Lernziel 1 & 2
-  { de: "die Schule", fr: ["l'école (f.)"] },
-  { de: "der Lehrer / die Lehrerin", fr: ["le maître", "la maîtresse"] },
-  { de: "der Schüler / die Schülerin", fr: ["l'élève (m./f.)"] },
-  { de: "das Klassenzimmer", fr: ["la salle de classe"] },
-  { de: "die Hausaufgaben", fr: ["les devoirs (m. pl.)"] },
-  { de: "die Pause", fr: ["la récréation"] },
-  { de: "lachen", fr: ["rire"] },
-  { de: "weinen", fr: ["pleurer"] },
-  { de: "Angst haben", fr: ["avoir peur"] },
+  // --- BILD 3 & 4: Freunde & Charakter ---
+  { de: "der beste Freund", fr: ["le meilleur ami"], isImg: true },
+  { de: "die beste Freundin", fr: ["la meilleure amie"], isImg: true },
+  { de: "genial", fr: ["génial", "géniale"], isImg: true },
+  { de: "lustig / witzig", fr: ["drôle", "amusant", "amusante"], isImg: true },
+  { de: "ruhig", fr: ["tranquille"], isImg: true },
+  { de: "verschieden / anders", fr: ["différent", "différente"], isImg: true },
+  { de: "der Unterschied", fr: ["la différence"], isImg: true },
+  { de: "wichtig", fr: ["important", "importante"], isImg: true },
+  { de: "sprechen", fr: ["parler"], isImg: true },
+  { de: "lieben / mögen", fr: ["aimer"], isImg: true },
+  { de: "viel", fr: ["beaucoup"], isImg: true },
+  { de: "der Humor", fr: ["l'humour"], isImg: true },
+  { de: "lachen", fr: ["rigoler"], isImg: true },
+  { de: "Zeit verbringen", fr: ["passer le temps"], isImg: true },
+  { de: "zusammen / gemeinsam", fr: ["ensemble"], isImg: true },
+  { de: "Kontakt halten", fr: ["garder contact"], isImg: true },
+  { de: "Clips schicken", fr: ["envoyer des clips"], isImg: true },
+  { de: "13 Jahre alt sein", fr: ["avoir 13 ans"], isImg: true },
+  { de: "der Nachbar / die Nachbarin", fr: ["le voisin", "la voisine"], isImg: true },
+  { de: "einen Freund treffen", fr: ["rencontrer un ami"], isImg: true },
+  { de: "kennen", fr: ["connaître"], isImg: true },
+  { de: "seit 5 Jahren", fr: ["depuis cinq ans"], isImg: true },
+  { de: "Gemeinsamkeiten haben", fr: ["avoir des points communs"], isImg: true },
+  { de: "da sein für jemanden", fr: ["être là pour qn"], isImg: true },
+  { de: "vertrauen", fr: ["faire confiance"], isImg: true },
+  { de: "während / wohingegen", fr: ["tandis que"], isImg: true },
+  { de: "fast", fr: ["presque"], isImg: true },
+  { de: "sympathisch", fr: ["sympathique"], isImg: true },
+  { de: "grosszügig", fr: ["généreux", "généreuse"], isImg: true },
+  { de: "verständnisvoll", fr: ["compréhensif", "compréhensive"], isImg: true },
+  { de: "sportlich", fr: ["sportif", "sportive"], isImg: true },
+  { de: "fröhlich", fr: ["joyeux", "joyeuse"], isImg: true },
+  { de: "schön", fr: ["beau", "belle"], isImg: true },
+  { de: "geduldig", fr: ["patient", "patiente"], isImg: true },
+  { de: "ehrlich", fr: ["honnête"], isImg: true },
+  { de: "aufmerksam", fr: ["attentif", "attentive"], isImg: true },
+  { de: "respektvoll", fr: ["respectueux", "respectueuse"], isImg: true },
+  { de: "ordentlich", fr: ["ordonné", "ordonnée"], isImg: true },
+  { de: "fleissig", fr: ["travailleur", "travailleuse"], isImg: true },
+  { de: "faul", fr: ["paresseux", "paresseuse"], isImg: true },
+  { de: "gesprächig", fr: ["bavard", "bavarde"], isImg: true },
+  { de: "sehr", fr: ["très"], isImg: true },
+  { de: "ein bisschen", fr: ["un peu"], isImg: true },
 
-  // Bild 4: Lernziel 3
-  { de: "aufstehen", fr: ["se lever"] },
-  { de: "sich duschen", fr: ["se doucher"] },
-  { de: "sich bürsten", fr: ["se brosser"] },
-  { de: "das Frühstück", fr: ["le petit-déjeuner"] },
-  { de: "die Mutter", fr: ["la mère"] },
-  { de: "der Vater", fr: ["le père"] },
-  { de: "die Schwester", fr: ["la sœur"] },
-  { de: "der Bruder", fr: ["le frère"] },
+  // --- BILD 5 & 6: Freizeit, Natur & Reisen ---
+  { de: "ins Schwimmbad gehen", fr: ["aller à la piscine"], isImg: true },
+  { de: "ins Kino gehen", fr: ["aller au cinéma"], isImg: true },
+  { de: "in die Stadt gehen", fr: ["aller en ville"], isImg: true },
+  { de: "Fussball spielen", fr: ["faire du foot"], isImg: true },
+  { de: "tanzen", fr: ["faire de la danse"], isImg: true },
+  { de: "Rad fahren", fr: ["faire du vélo"], isImg: true },
+  { de: "grillieren", fr: ["faire des grillades"], isImg: true },
+  { de: "feiern", fr: ["faire la fête"], isImg: true },
+  { de: "kochen", fr: ["faire la cuisine"], isImg: true },
+  { de: "hassen", fr: ["détester"], isImg: true },
+  { de: "schlitteln", fr: ["faire de la luge"], isImg: true },
+  { de: "reiten", fr: ["faire de l'équitation"], isImg: true },
+  { de: "Film schauen", fr: ["regarder un film"], isImg: true },
+  { de: "Musik hören", fr: ["écouter de la musik"], isImg: true },
+  { de: "Computer spielen", fr: ["jouer à l'ordinateur"], isImg: true },
+  { de: "Klavier spielen", fr: ["jouer du piano"], isImg: true },
+  { de: "Gitarre spielen", fr: ["jouer de la guitare"], isImg: true },
+  { de: "die Erde", fr: ["la Terre"], isImg: true },
+  { de: "der Planet", fr: ["la planète"], isImg: true },
+  { de: "der/die Erste", fr: ["premier", "première"], isImg: true },
+  { de: "Sprache lernen", fr: ["apprendre une langue"], isImg: true },
+  { de: "die Landschaft", fr: ["le paysage"], isImg: true },
+  { de: "die Wüste", fr: ["le désert"], isImg: true },
+  { de: "das Meer", fr: ["la mer"], isImg: true },
+  { de: "der See", fr: ["le lac"], isImg: true },
+  { de: "der Berg", fr: ["la montagne"], isImg: true },
+  { de: "es ist kalt", fr: ["il fait froid"], isImg: true },
+  { de: "es ist warm", fr: ["il fait chaud"], isImg: true },
+  { de: "Eis / Glace", fr: ["la glace"], isImg: true },
+  { de: "das Wasser", fr: ["l'eau"], isImg: true },
+  { de: "die Reise", fr: ["le voyage"], isImg: true },
+  { de: "dauern", fr: ["durer"], isImg: true },
+  { de: "kosten", fr: ["coûter"], isImg: true },
+  { de: "das Fleisch", fr: ["la viande"], isImg: true },
+  { de: "das Gemüse", fr: ["le légume"], isImg: true },
+  { de: "wohnen", fr: ["habiter"], isImg: true },
+  { de: "übernachten / logieren", fr: ["loger"], isImg: true },
+  { de: "das Zimmer", fr: ["la chambre"], isImg: true },
+  { de: "brauchen", fr: ["avoir besoin de"], isImg: true },
+  { de: "ein Stern", fr: ["une étoile"], isImg: true },
+  { de: "die Nacht", fr: ["la nuit"], isImg: true },
+  { de: "der Tag", fr: ["le jour"], isImg: true },
+  { de: "der Monat", fr: ["le mois"], isImg: true },
+  { de: "das Land", fr: ["le pays"], isImg: true },
+  { de: "sich befinden", fr: ["se trouver"], isImg: true },
+  { de: "in Afrika", fr: ["en Afrique"], isImg: true },
+  { de: "in Deutschland", fr: ["en Allemagne"], isImg: true },
+  { de: "in England", fr: ["en Angleterre"], isImg: true },
+  { de: "in den USA", fr: ["aux États-Unis"], isImg: true },
+  { de: "in den Ferien", fr: ["pendant les vacances"], isImg: true },
+  { de: "am Strand", fr: ["à la plage"], isImg: true },
+  { de: "sonnenbaden / bräunen", fr: ["bronzer"], isImg: true },
+  { de: "Fotos machen", fr: ["prendre des photos"], isImg: true },
+  { de: "abends ausgehen", fr: ["sortir le soir"], isImg: true },
+  { de: "Spezialitäten essen", fr: ["manger des spécialités"], isImg: true },
+  { de: "Abenteuer erleben", fr: ["vivre des aventures"], isImg: true },
+  { de: "Tiere beobachten", fr: ["observer des animaux"], isImg: true },
+  { de: "das Zelt", fr: ["la tente"], isImg: true },
+  { de: "eine Insel", fr: ["une île"], isImg: true },
+  { de: "der Wald", fr: ["la forêt"], isImg: true },
 
-  // Bild 5 & 15: Lernziel 1, 2 & 3
-  { de: "schlafen", fr: ["dormir"] },
-  { de: "Hast du gut geschlafen?", fr: ["Tu as bien dormi?"] },
-  { de: "eine Erkältung haben, einen Schnupfen haben", fr: ["avoir le rhume"] },
-  { de: "zum Arzt gehen", fr: ["aller chez le médecin"] },
-  { de: "der Husten", fr: ["la toux"] },
-  { de: "jmdm. telefonieren, jmdn. anrufen", fr: ["téléphoner à qn"] },
-  { de: "ein Notfall", fr: ["une urgence"] },
-  { de: "den Puls kontrollieren, messen", fr: ["contrôler le pouls"] },
-  { de: "Bleib ruhig.", fr: ["Reste tranquille."] },
-  { de: "den Verband wechseln", fr: ["changer le pansement"] },
-  { de: "lernen", fr: ["apprendre"] },
-  { de: "er hat gelernt", fr: ["il a appris"] },
-  { de: "verstehen", fr: ["comprendre"] },
-  { de: "wir haben verstanden", fr: ["nous avons compris"] },
-  { de: "nehmen", fr: ["prendre"] },
-  { de: "sie hat genommen", fr: ["elle a pris"] },
-  { de: "die Tablette", fr: ["le comprimé"] },
-  { de: "das Medikament", fr: ["le médicament"] },
-  { de: "Mir ist schlecht", fr: ["J'ai mal au cœur"] },
-  { de: "der Durchfall", fr: ["la diarrhée"] },
-  { de: "Ich habe mir den Arm gebrochen.", fr: ["Je me suis cassé le bras."] },
-  { de: "ein Schmerzmittel", fr: ["un antidouleur"] },
-  { de: "Ich habe mir den Fuss verstaucht.", fr: ["Je me suis foulé le pied."] },
-  { de: "Ich habe mir in den Finger geschnitten.", fr: ["Je me suis coupé le doigt."] },
-  { de: "Tut das/es weh?", fr: ["Ça fait mal?"] },
-  { de: "(sich) bewegen", fr: ["bouger"] },
-  { de: "Ziehen Sie/Zieht einen Schal an.", fr: ["Mettez une écharpe."] },
-  { de: "Trinken Sie/Trinkt Tee.", fr: ["Buvez du thé."] },
-  { de: "sich ausruhen", fr: ["se reposer"] },
-  { de: "sich anziehen", fr: ["s'habiller"] },
-  { de: "Setzen Sie sich./Setzt euch.", fr: ["Asseyez-vous."] },
-  { de: "Leg dich ins Bett.", fr: ["Mets-toi au lit."] },
-  { de: "Geh ins Spital.", fr: ["Va à l'hôpital."] },
-
-  // Bild 6: Lernziel 3
-  { de: "die Ferien", fr: ["les vacances (f. pl.)"] },
-  { de: "am Meer", fr: ["au bord de la mer"] },
-  { de: "in den Bergen", fr: ["à la montagne"] },
-  { de: "besuchen", fr: ["visiter"] },
-  { de: "reisen", fr: ["voyager"] },
-
-  // Bild 7: Lernziel 3 (Passé composé avec être)
-  { de: "gehen", fr: ["aller"] },
-  { de: "kommen", fr: ["venir"] },
-  { de: "ankommen", fr: ["arriver"] },
-  { de: "weggehen", fr: ["partir"] },
-  { de: "eintreten", fr: ["entrer"] },
-  { de: "hinausgehen", fr: ["sortir"] },
-  { de: "bleiben", fr: ["rester"] },
-  { de: "fallen", fr: ["tomber"] },
-
-  // Bild 8 & 9: Unité 6, Lernziel 1
-  { de: "der Apparat / das Gerät", fr: ["l'appareil (m.)"] },
-  { de: "die Maschine", fr: ["la machine"] },
-  { de: "der Staubsauger", fr: ["l'aspirateur (m.)"] },
-  { de: "die Kaffeemaschine", fr: ["la machine à café"] },
-  { de: "der Haartrockner / Föhn", fr: ["le sèche-cheveux"] },
-  { de: "leicht (m./f.)", fr: ["léger", "légère"] },
-  { de: "schwer (m./f.)", fr: ["lourd", "lourde"] },
-  { de: "praktisch (m./f.)", fr: ["pratique"] },
-  { de: "nützlich (m./f.)", fr: ["utile"] },
-
-  // Bild 10 & 12: Unité 4, Lernziel 1 & 2
-  { de: "der Beruf", fr: ["le métier", "la profession"] },
-  { de: "arbeiten", fr: ["travailler"] },
-  { de: "verkaufen", fr: ["vendre"] },
-  { de: "kaufen", fr: ["acheter"] },
-  { de: "das Geld", fr: ["l'argent (m.)"] },
-
-  // Bild 11: Lernziel 1
-  { de: "der Freund / die Freundin", fr: ["l'ami (m.)", "l'amie (f.)"] },
-  { de: "sympathisch", fr: ["sympathique"] },
-  { de: "cool", fr: ["cool"] },
-  { de: "lustig", fr: ["drôle"] },
-
-  // Bild 13: Unité 3, Lernziel 1 & 2
-  { de: "die Welt", fr: ["le monde"] },
-  { de: "die Erde", fr: ["la terre"] },
-  { de: "der Mond", fr: ["la lune"] },
-  { de: "die Sonne", fr: ["le soleil"] },
-  { de: "der Stern", fr: ["l'étoile (f.)"] },
-  { de: "der Planet", fr: ["la planète"] },
-  { de: "die Insel", fr: ["l'île (f.)"] },
-  { de: "der See", fr: ["le lac"] },
-  { de: "der Wald", fr: ["la forêt"] }
+  // --- BILD 7: Kleidung & Koffer ---
+  { de: "mieten", fr: ["louer"], isImg: true },
+  { de: "Ferienwohnung", fr: ["un appartement de vacances"], isImg: true },
+  { de: "spektakulär", fr: ["spectaculaire"], isImg: true },
+  { de: "nahe am Strand", fr: ["proche de la plage"], isImg: true },
+  { de: "die Kleider", fr: ["les vêtements"], isImg: true },
+  { de: "anziehen / setzen / legen", fr: ["mettre"], isImg: true },
+  { de: "der Koffer", fr: ["la valise"], isImg: true },
+  { de: "der Pullover", fr: ["le pull"], isImg: true },
+  { de: "die Hose", fr: ["le pantalon"], isImg: true },
+  { de: "das T-Shirt", fr: ["le tee-shirt"], isImg: true },
+  { de: "die Unterwäsche", fr: ["les sous-vêtements"], isImg: true },
+  { de: "die Socken", fr: ["les chaussettes"], isImg: true },
+  { de: "die Jacke", fr: ["la veste"], isImg: true },
+  { de: "die Shorts", fr: ["le short"], isImg: true },
+  { de: "das Kleid", fr: ["la robe"], isImg: true },
+  { de: "das Badezeug", fr: ["le maillot de bain"], isImg: true },
+  { de: "das Hemd", fr: ["la chemise"], isImg: true },
+  { de: "die Schuhe", fr: ["les chaussures"], isImg: true },
+  { de: "die Turnschuhe", fr: ["les baskets"], isImg: true },
+  { de: "die Schirmmütze", fr: ["la casquette"], isImg: true },
+  { de: "der Schal", fr: ["eine écharpe"], isImg: true },
+  { de: "die Handschuhe", fr: ["les gants"], isImg: true },
+  { de: "das Necessaire", fr: ["la trousse de toilette"], isImg: true },
+  { de: "die Handtasche", fr: ["le sac à main"], isImg: true },
+  { de: "der Reisepass", fr: ["le passeport"], isImg: true },
+  { de: "Kamera / Fotoapparat", fr: ["un appareil photo"], isImg: true },
+  { de: "die Sonnencreme", fr: ["la crème solaire"], isImg: true },
+  { de: "die Sonnenbrille", fr: ["les lunettes de soleil"], isImg: true },
+  { de: "das Ladegerät", fr: ["le chargeur"], isImg: true }
 ];
 
 
-
-const praiseList = [
-    "EXCELLENT! 🏆", "MAGNIFIQUE! ✨", "STARK GEMACHT! 💪", "UNSTOPPABLE! 🔥",
-    "C'EST PARFAIT! 🇫🇷", "RICHTIG GUT! ⭐", "WOW! WEITER SO! 🚀", 
-    "VRAIMENT BIEN! 💎", "MEISTERHAFT! 👑", "TOP LEISTUNG! 🎯"
-];
-
-let currentIndex = -1;
-let stars = JSON.parse(localStorage.getItem('stars') || '{}');
-let stats = JSON.parse(localStorage.getItem('stats') || '{}');
+// --- LOGIK ---
+let currentIdx = 0;
+let starred = JSON.parse(localStorage.getItem('starredVocab') || '[]');
+const themes = ['cyber','ocean','forest','sunset','lava','space','gold','neon','royal'];
 
 function init() {
-    const themes = ['default', 'cyber', 'ocean', 'forest', 'sunset', 'lava', 'space', 'gold', 'neon', 'royal'];
-    const colors = ['#6366f1', '#d946ef', '#38bdf8', '#34d399', '#fbbf24', '#ef4444', '#8b5cf6', '#d97706', '#22c55e', '#a855f7'];
-    const grid = document.getElementById('themeGrid');
-    
-    themes.forEach((t, i) => {
-        let dot = document.createElement('div');
-        dot.className = 'theme-dot'; dot.style.background = colors[i];
-        dot.onclick = () => setTheme(t); grid.appendChild(dot);
-    });
+  createParticles();
+  createThemeDots();
+  showNext();
+  
+  // Enter Taste Unterstützung
+  document.getElementById('answerInput').addEventListener('keypress', (e) => {
+  if(e.key === 'Enter') {
+    check(); // Macht jetzt bei jedem Enter-Druck nur den Check
+  }
+});
 
-    setTheme(localStorage.getItem('theme') || 'cyber');
-    createParticles();
-    showNext();
-    updateStatsDisplay();
-}
-
-function setTheme(t) {
-    document.body.className = 'theme-' + t;
-    localStorage.setItem('theme', t);
 }
 
 function showNext() {
-    let list = vocabList;
-    if(document.getElementById('starOnlyToggle').checked) {
-        list = vocabList.filter(v => stars[v.de]);
+  const starOnly = document.getElementById('starOnlyToggle').checked;
+  let pool = vocabulaire;
+  
+  if(starOnly) {
+    pool = vocabulaire.filter(v => starred.includes(v.de));
+    if(pool.length === 0) {
+      alert("Du hast noch keine Wörter mit Stern markiert! Übe erst einmal alle.");
+      document.getElementById('starOnlyToggle').checked = false;
+      pool = vocabulaire;
     }
-    if(list.length === 0) {
-        document.getElementById('vocabDisplay').innerText = "Liste leer! 🛑";
-        return;
-    }
-    
-    currentIndex = vocabList.indexOf(list[Math.floor(Math.random() * list.length)]);
-    const display = document.getElementById('vocabDisplay');
-    display.style.animation = 'none'; display.offsetHeight; // Reflow
-    display.style.animation = 'wordReveal 0.5s ease-out';
-    display.innerText = vocabList[currentIndex].de;
-    
-    document.getElementById('starBtn').innerText = stars[vocabList[currentIndex].de] ? '⭐' : '☆';
-    document.getElementById('answerInput').value = '';
-    document.getElementById('feedback').innerText = '';
-    document.getElementById('feedback').className = 'feedback';
-    document.getElementById('answerInput').focus();
+  }
+
+  currentIdx = vocabulaire.indexOf(pool[Math.floor(Math.random() * pool.length)]);
+  
+  document.getElementById('vocabDisplay').innerText = vocabulaire[currentIdx].de;
+  document.getElementById('answerInput').value = '';
+  document.getElementById('answerInput').focus();
+  document.getElementById('feedback').innerText = '';
+  document.getElementById('feedback').className = 'feedback';
+  updateStarUI();
 }
 
 function check() {
-    if(currentIndex === -1) return;
-    const input = document.getElementById('answerInput').value.trim().toLowerCase();
-    const corrects = vocabList[currentIndex].fr.map(s => s.toLowerCase());
-    const isCorrect = corrects.includes(input);
-    
-    const word = vocabList[currentIndex].de;
-    if(!stats[word]) stats[word] = {c: 0, w: 0};
+  const input = document.getElementById('answerInput').value.trim().toLowerCase();
+  const correctOnes = vocabulaire[currentIdx].fr.map(v => v.toLowerCase());
+  const feedback = document.getElementById('feedback');
 
-    const fb = document.getElementById('feedback');
-    fb.style.animation = 'none'; fb.offsetHeight; // Reflow
-
-    if(isCorrect) {
-        fb.innerText = praiseList[Math.floor(Math.random() * praiseList.length)];
-        fb.className = "feedback correct";
-        stats[word].c++;
-    } else {
-        fb.innerText = "Lösung: " + vocabList[currentIndex].fr[0].toUpperCase();
-        fb.className = "feedback wrong";
-        stats[word].w++;
-    }
-    save(); updateStatsDisplay();
+  if(correctOnes.includes(input)) {
+    feedback.innerText = "RICHTIG! 🔥";
+    feedback.className = "feedback correct";
+  } else {
+    feedback.innerText = `FALSCH! Lösung: ${vocabulaire[currentIdx].fr[0]}`;
+    feedback.className = "feedback wrong";
+  }
 }
 
 function toggleStar() {
-    if(currentIndex === -1) return;
-    const word = vocabList[currentIndex].de;
-    stars[word] = !stars[word];
-    document.getElementById('starBtn').innerText = stars[word] ? '⭐' : '☆';
-    save();
+  const word = vocabulaire[currentIdx].de;
+  if(starred.includes(word)) {
+    starred = starred.filter(w => w !== word);
+  } else {
+    starred.push(word);
+  }
+  localStorage.setItem('starredVocab', JSON.stringify(starred));
+  updateStarUI();
 }
 
-function save() {
-    localStorage.setItem('stars', JSON.stringify(stars));
-    localStorage.setItem('stats', JSON.stringify(stats));
+function updateStarUI() {
+  const btn = document.getElementById('starBtn');
+  btn.innerText = starred.includes(vocabulaire[currentIdx].de) ? '★' : '☆';
 }
 
-function updateStatsDisplay() {
-    const list = document.getElementById('statsList');
-    list.innerHTML = '';
-    for(let word in stats) {
-        const s = stats[word];
-        list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:13px;">
-            <span>${word}</span><span>✅ ${s.c} | ❌ ${s.w}</span>
-        </div>`;
-    }
+function toggleSettings() {
+  document.getElementById('settingsModal').classList.toggle('active');
 }
 
-function toggleSettings() { document.getElementById('settingsModal').classList.toggle('active'); }
+function createThemeDots() {
+  const grid = document.getElementById('themeGrid');
+  themes.forEach(t => {
+    const dot = document.createElement('div');
+    dot.className = `theme-dot theme-${t}`;
+    dot.style.background = `var(--accent)`; // Vereinfacht für das Beispiel
+    dot.onclick = () => document.body.className = `theme-${t}`;
+    grid.appendChild(dot);
+  });
+}
 
 function createParticles() {
-    const container = document.getElementById('particles');
-    for(let i=0; i<30; i++) {
-        let p = document.createElement('div'); p.className = 'particle';
-        p.style.left = Math.random() * 100 + 'vw';
-        p.style.width = p.style.height = (Math.random() * 6 + 2) + 'px';
-        p.style.animationDelay = (Math.random() * 12) + 's';
-        container.appendChild(p);
-    }
+  const p = document.getElementById('particles');
+  for(let i=0; i<30; i++) {
+    const div = document.createElement('div');
+    div.className = 'particle';
+    div.style.left = Math.random() * 100 + 'vw';
+    div.style.width = div.style.height = Math.random() * 6 + 2 + 'px';
+    div.style.animationDelay = Math.random() * 10 + 's';
+    p.appendChild(div);
+  }
 }
-
-document.getElementById('answerInput').onkeypress = (e) => { if(e.key === 'Enter') check(); };
 init();
 </script>
 </body>
